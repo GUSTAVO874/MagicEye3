@@ -5,7 +5,7 @@ namespace MagicEye3.Services.BackEndAPI.Data
 {
     public class AppDbContext : DbContext
     {
-        // Constructor
+        //el Constructor
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
