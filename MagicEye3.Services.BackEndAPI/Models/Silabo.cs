@@ -12,14 +12,14 @@ namespace MagicEye3.Services.BackEndAPI.Models
         [ForeignKey("CarreraId")]
         public Carrera? Carrera { get; set; }
 
-        public int PeriodoId { get; set; }
-        [ForeignKey("PeriodoId")]
-        public Periodo? Periodo { get; set; }
+        public int CicloId { get; set; }
+        [ForeignKey("CicloId")]
+        public Ciclo? Ciclo { get; set; }
 
         public string? Nombre { get; set; } // nombre de la asignatura
         public ICollection<Unidad>? Unidades { get; set; }
 
         // Add this navigation property
-        public ICollection<SilaboParcial> SilaboParciales { get; set; }
+        public ICollection<SilaboGrupo> SilaboGrupos { get; set; }
     }
 }

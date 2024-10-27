@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MagicEye3.Services.BackEndAPI.Models
 {
@@ -8,8 +9,9 @@ namespace MagicEye3.Services.BackEndAPI.Models
         [Key]
         public int ParcialId { get; set; }
         public string? Nombre { get; set; }
+        public int CicloId { get; set; }
+        [ForeignKey("CicloId")]
+        public Ciclo? Ciclo { get; set; }
 
-        // Add this navigation property
-        public ICollection<SilaboParcial> SilaboParciales { get; set; }
     }
 }

@@ -5,15 +5,16 @@ namespace MagicEye3.Services.BackEndAPI.Data
 {
     public class AppDbContext : DbContext
     {
-        //el Constructor
+        // Constructor
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
 
-        // DbSets
+        // DbSets for your entities
         public DbSet<Actividad> Actividades { get; set; }
         public DbSet<Carrera> Carreras { get; set; }
+        public DbSet<Ciclo> Ciclos { get; set; }
         public DbSet<Componente> Componentes { get; set; }
         public DbSet<ComponenteActividad> ComponenteActividades { get; set; }
         public DbSet<Contenido> Contenidos { get; set; }
@@ -25,7 +26,7 @@ namespace MagicEye3.Services.BackEndAPI.Data
         public DbSet<Parcial> Parciales { get; set; }
         public DbSet<Periodo> Periodos { get; set; }
         public DbSet<Silabo> Silabos { get; set; }
-        public DbSet<SilaboParcial> SilaboParciales { get; set; }
+        public DbSet<SilaboGrupo> SilaboGrupos { get; set; }
         public DbSet<Unidad> Unidades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -78,20 +79,20 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .HasForeignKey(fc => fc.FechaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Many-to-Many: SilaboParcial
-            modelBuilder.Entity<SilaboParcial>()
-                .HasKey(sp => new { sp.SilaboId, sp.ParcialId });
+            // Many-to-Many: SilaboGrupo
+            modelBuilder.Entity<SilaboGrupo>()
+                .HasKey(sg => new { sg.SilaboId, sg.GrupoId });
 
-            modelBuilder.Entity<SilaboParcial>()
-                .HasOne(sp => sp.Silabo)
-                .WithMany(s => s.SilaboParciales)
-                .HasForeignKey(sp => sp.SilaboId)
+            modelBuilder.Entity<SilaboGrupo>()
+                .HasOne(sg => sg.Silabo)
+                .WithMany(s => s.SilaboGrupos)
+                .HasForeignKey(sg => sg.SilaboId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<SilaboParcial>()
-                .HasOne(sp => sp.Parcial)
-                .WithMany(p => p.SilaboParciales)
-                .HasForeignKey(sp => sp.ParcialId)
+            modelBuilder.Entity<SilaboGrupo>()
+                .HasOne(sg => sg.Grupo)
+                .WithMany(g => g.SilaboGrupos)
+                .HasForeignKey(sg => sg.GrupoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-Many: Actividad - Evaluacion
@@ -122,22 +123,28 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .HasForeignKey(s => s.CarreraId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // One-to-Many: Silabo - Periodo
+            // One-to-Many: Silabo - Ciclo
             modelBuilder.Entity<Silabo>()
-                .HasOne(s => s.Periodo)
-                .WithMany(p => p.Silabos)
-                .HasForeignKey(s => s.PeriodoId)
+                .HasOne(s => s.Ciclo)
+                .WithMany(c => c.Silabos)
+                .HasForeignKey(s => s.CicloId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // One-to-Many: Grupo - Periodo
-            modelBuilder.Entity<Grupo>()
-                .HasOne(g => g.Periodo)
-                .WithMany(p => p.Grupos)
-                .HasForeignKey(g => g.PeriodoId)
+            // One-to-Many: Parcial - Ciclo
+            modelBuilder.Entity<Parcial>()
+                .HasOne(p => p.Ciclo)
+                .WithMany(c => c.Parciales)
+                .HasForeignKey(p => p.CicloId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Additional configurations
-            // For example, specify default values, indexes, etc.
+            // One-to-Many: Ciclo - Periodo
+            modelBuilder.Entity<Ciclo>()
+                .HasOne(c => c.Periodo)
+                .WithMany(p => p.Ciclos)
+                .HasForeignKey(c => c.PeriodoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
         }
     }
 }

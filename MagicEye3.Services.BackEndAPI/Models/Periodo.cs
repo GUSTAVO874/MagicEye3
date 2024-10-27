@@ -7,7 +7,7 @@ namespace MagicEye3.Services.BackEndAPI.Models
         [Key]
         public int PeriodoId {  get; set; }
         public string? Nombre {  get; set; }
-        public IEnumerable<Silabo>? Silabos { get; set; }
-        public IEnumerable<Grupo>? Grupos { get; set; }
+        public IEnumerable<Ciclo>? Ciclos { get; set; }
+        
     }
 }
