@@ -1,0 +1,6 @@
+@MagicEye3.Services.BackEndAPI_HostAddress = http://localhost:5245
+
+GET {{MagicEye3.Services.BackEndAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

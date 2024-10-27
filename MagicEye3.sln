@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{C27EB3AF-B205-45FA-81F2-650E9D133DEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5E4DA0E5-8BDF-493B-A9E0-5019E59C9B28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicEye3.Services.BackEndAPI", "MagicEye3.Services.BackEndAPI\MagicEye3.Services.BackEndAPI.csproj", "{8337C506-6240-48EB-B00C-83110F6B1222}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8337C506-6240-48EB-B00C-83110F6B1222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8337C506-6240-48EB-B00C-83110F6B1222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8337C506-6240-48EB-B00C-83110F6B1222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8337C506-6240-48EB-B00C-83110F6B1222}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8337C506-6240-48EB-B00C-83110F6B1222} = {5E4DA0E5-8BDF-493B-A9E0-5019E59C9B28}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F30EAF87-F491-4316-AAAA-2A18F266C69C}
+	EndGlobalSection
+EndGlobal
