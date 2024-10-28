@@ -11,9 +11,10 @@ namespace MagicEye3.Services.BackEndAPI.Data
         {
         }
 
-        // DbSets for your entities
+        // DbSet properties for your entities
         public DbSet<Actividad> Actividades { get; set; }
         public DbSet<Carrera> Carreras { get; set; }
+        public DbSet<CarreraPeriodo> CarreraPeriodos { get; set; }
         public DbSet<Ciclo> Ciclos { get; set; }
         public DbSet<Componente> Componentes { get; set; }
         public DbSet<ComponenteActividad> ComponenteActividades { get; set; }
@@ -31,7 +32,12 @@ namespace MagicEye3.Services.BackEndAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Many-to-Many: ComponenteActividad
+            // Call the base method
+            base.OnModelCreating(modelBuilder);
+
+            // Configure composite keys and relationships
+
+            // Many-to-Many: ComponenteActividad (Componente <-> Actividad)
             modelBuilder.Entity<ComponenteActividad>()
                 .HasKey(ca => new { ca.ComponenteId, ca.ActividadId });
 
@@ -47,7 +53,7 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .HasForeignKey(ca => ca.ActividadId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Many-to-Many: ContenidoComponente
+            // Many-to-Many: ContenidoComponente (Contenido <-> Componente)
             modelBuilder.Entity<ContenidoComponente>()
                 .HasKey(cc => new { cc.ContenidoId, cc.ComponenteId });
 
@@ -63,15 +69,9 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .HasForeignKey(cc => cc.ComponenteId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Many-to-Many: FechaContenido
+            // Many-to-Many: FechaContenido (Fecha <-> Contenido)
             modelBuilder.Entity<FechaContenido>()
-                .HasKey(fc => new { fc.ContenidoId, fc.FechaId });
-
-            modelBuilder.Entity<FechaContenido>()
-                .HasOne(fc => fc.Contenido)
-                .WithMany(c => c.FechaContenidos)
-                .HasForeignKey(fc => fc.ContenidoId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasKey(fc => new { fc.FechaId, fc.ContenidoId });
 
             modelBuilder.Entity<FechaContenido>()
                 .HasOne(fc => fc.Fecha)
@@ -79,7 +79,13 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .HasForeignKey(fc => fc.FechaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Many-to-Many: SilaboGrupo
+            modelBuilder.Entity<FechaContenido>()
+                .HasOne(fc => fc.Contenido)
+                .WithMany(c => c.FechaContenidos)
+                .HasForeignKey(fc => fc.ContenidoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Many-to-Many: SilaboGrupo (Silabo <-> Grupo)
             modelBuilder.Entity<SilaboGrupo>()
                 .HasKey(sg => new { sg.SilaboId, sg.GrupoId });
 
@@ -93,6 +99,22 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .HasOne(sg => sg.Grupo)
                 .WithMany(g => g.SilaboGrupos)
                 .HasForeignKey(sg => sg.GrupoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Many-to-Many: CarreraPeriodo (Carrera <-> Periodo)
+            modelBuilder.Entity<CarreraPeriodo>()
+                .HasKey(cp => new { cp.CarreraId, cp.PeriodoId });
+
+            modelBuilder.Entity<CarreraPeriodo>()
+                .HasOne(cp => cp.Carrera)
+                .WithMany(c => c.CarreraPeriodos)
+                .HasForeignKey(cp => cp.CarreraId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CarreraPeriodo>()
+                .HasOne(cp => cp.Periodo)
+                .WithMany(p => p.CarreraPeriodos)
+                .HasForeignKey(cp => cp.PeriodoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-Many: Actividad - Evaluacion
@@ -116,11 +138,11 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .HasForeignKey(u => u.SilaboId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // One-to-Many: Silabo - Carrera
-            modelBuilder.Entity<Silabo>()
-                .HasOne(s => s.Carrera)
-                .WithMany(c => c.Silabos)
-                .HasForeignKey(s => s.CarreraId)
+            // One-to-Many: Parcial - Ciclo
+            modelBuilder.Entity<Parcial>()
+                .HasOne(p => p.Ciclo)
+                .WithMany(c => c.Parciales)
+                .HasForeignKey(p => p.CicloId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // One-to-Many: Silabo - Ciclo
@@ -130,13 +152,6 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .HasForeignKey(s => s.CicloId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // One-to-Many: Parcial - Ciclo
-            modelBuilder.Entity<Parcial>()
-                .HasOne(p => p.Ciclo)
-                .WithMany(c => c.Parciales)
-                .HasForeignKey(p => p.CicloId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             // One-to-Many: Ciclo - Periodo
             modelBuilder.Entity<Ciclo>()
                 .HasOne(c => c.Periodo)
@@ -144,7 +159,17 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .HasForeignKey(c => c.PeriodoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Additional configurations
 
+            // Initialize collections in models if not already done
+            // For example, in Periodo:
+            // public Periodo()
+            // {
+            //     CarreraPeriodos = new HashSet<CarreraPeriodo>();
+            //     Ciclos = new HashSet<Ciclo>();
+            // }
+
+            // Similarly, initialize collections in other models
         }
     }
 }

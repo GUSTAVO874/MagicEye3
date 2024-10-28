@@ -11,6 +11,7 @@ namespace MagicEye3.Services.BackEndAPI.Models
         public int EvaluacionId { get; set; }
         [ForeignKey("EvaluacionId")]
         public Evaluacion Evaluacion { get; set; }
+        public string Descripcion { get; set; }
 
         public int Tiempo { get; set; }
 

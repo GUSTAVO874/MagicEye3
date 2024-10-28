@@ -8,10 +8,6 @@ namespace MagicEye3.Services.BackEndAPI.Models
     {
         [Key]
         public int SilaboId { get; set; }
-        public int CarreraId { get; set; }
-        [ForeignKey("CarreraId")]
-        public Carrera? Carrera { get; set; }
-
         public int CicloId { get; set; }
         [ForeignKey("CicloId")]
         public Ciclo? Ciclo { get; set; }

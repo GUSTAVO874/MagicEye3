@@ -7,7 +7,8 @@ namespace MagicEye3.Services.BackEndAPI.Models
         [Key]
         public int PeriodoId {  get; set; }
         public string? Nombre {  get; set; }
-        public IEnumerable<Ciclo>? Ciclos { get; set; }
-        
+        public IEnumerable<CarreraPeriodo>? CarreraPeriodos { get; set; }
+        public IEnumerable<Ciclo>? Ciclos{ get; set; }
+
     }
 }

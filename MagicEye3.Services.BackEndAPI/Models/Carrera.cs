@@ -7,6 +7,6 @@ namespace MagicEye3.Services.BackEndAPI.Models
         [Key]
         public int CarreraId { get; set; }
         public string? Nombre { get; set; }
-        public IEnumerable<Silabo>? Silabos { get; set; }
+        public IEnumerable<CarreraPeriodo>? CarreraPeriodos { get; set; }
     }
 }
