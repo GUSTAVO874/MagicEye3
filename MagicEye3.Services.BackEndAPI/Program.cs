@@ -1,3 +1,4 @@
+using AutoMapper;
 using MagicEye3.Services.BackEndAPI.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Agregar el contexto de base de datos
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Registrar servicio AutoMapper
+var config = new MapperConfiguration(cfg => {
+    cfg.AddProfile<MagicEye2.Services.BackEndAPI.MappingConfig>();
+});
+
+IMapper mapper = config.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 // Add services to the container.
 
