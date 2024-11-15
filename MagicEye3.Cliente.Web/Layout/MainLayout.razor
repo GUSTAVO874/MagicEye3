@@ -1,0 +1,100 @@
+﻿@inherits LayoutComponentBase
+@using MagicEye3.Cliente.Web.Service
+@using MagicEye3.Cliente.Web.Service.IService
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ITokenProvider TokenProvider
+@inject NavigationManager NavigationManager
+
+@* <AuthorizeView>
+    <Authorized>
+        <div class="user-info">
+            @if (user != null)
+            {
+                <span>@user.Identity.Name</span>
+                <button @onclick="Logout">Cerrar Sesión</button>
+            }
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <!-- Opcional: Mostrar algo si el usuario no está autenticado -->
+    </NotAuthorized>
+</AuthorizeView> *@
+
+
+@* <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">MagicEye3.Cliente.Web</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">Home</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="counter">Counter</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="weather">Weather</NavLink>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <AuthorizeView>
+                    <Authorized>
+                        @if (user != null)
+                        {
+                            <span class="navbar-text me-2">@user.Identity.Name</span>
+                            <button class="btn btn-outline-light" @onclick="Logout">Cerrar Sesión</button>
+                        }
+                    </Authorized>
+                    <NotAuthorized>
+                        <NavLink class="btn btn-outline-light" href="login">Iniciar Sesión</NavLink>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    @Body
+</div> *@
+
+
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    private ClaimsPrincipal user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        user = authState.User;
+    }
+
+    private async Task Logout()
+    {
+        await TokenProvider.ClearTokenAsync();
+        var customAuthStateProvider = (CustomAuthStateProvider)AuthStateProvider;
+        customAuthStateProvider.NotifyUserLogout();
+        NavigationManager.NavigateTo("/login");
+    }
+}

@@ -7,7 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{C2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5E4DA0E5-8BDF-493B-A9E0-5019E59C9B28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicEye3.Services.BackEndAPI", "MagicEye3.Services.BackEndAPI\MagicEye3.Services.BackEndAPI.csproj", "{8337C506-6240-48EB-B00C-83110F6B1222}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicEye3.Services.BackEndAPI", "MagicEye3.Services.BackEndAPI\MagicEye3.Services.BackEndAPI.csproj", "{8337C506-6240-48EB-B00C-83110F6B1222}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicEye2.Services.AuthAPI", "Mango.Services.AuthAPI\MagicEye2.Services.AuthAPI.csproj", "{870AC59D-7263-4F8D-9FD8-4508FA1BF648}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicEye3.Cliente.Web", "MagicEye3.Cliente.Web\MagicEye3.Cliente.Web.csproj", "{7E4920D0-B6DC-4C99-A255-AED84E0435A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,12 +23,22 @@ Global
 		{8337C506-6240-48EB-B00C-83110F6B1222}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8337C506-6240-48EB-B00C-83110F6B1222}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8337C506-6240-48EB-B00C-83110F6B1222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{870AC59D-7263-4F8D-9FD8-4508FA1BF648}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{870AC59D-7263-4F8D-9FD8-4508FA1BF648}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{870AC59D-7263-4F8D-9FD8-4508FA1BF648}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{870AC59D-7263-4F8D-9FD8-4508FA1BF648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E4920D0-B6DC-4C99-A255-AED84E0435A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E4920D0-B6DC-4C99-A255-AED84E0435A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E4920D0-B6DC-4C99-A255-AED84E0435A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E4920D0-B6DC-4C99-A255-AED84E0435A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8337C506-6240-48EB-B00C-83110F6B1222} = {5E4DA0E5-8BDF-493B-A9E0-5019E59C9B28}
+		{870AC59D-7263-4F8D-9FD8-4508FA1BF648} = {5E4DA0E5-8BDF-493B-A9E0-5019E59C9B28}
+		{7E4920D0-B6DC-4C99-A255-AED84E0435A0} = {C27EB3AF-B205-45FA-81F2-650E9D133DEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F30EAF87-F491-4316-AAAA-2A18F266C69C}

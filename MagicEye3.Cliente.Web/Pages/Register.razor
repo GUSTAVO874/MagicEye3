@@ -1,0 +1,129 @@
+﻿@page "/register"
+@using MagicEye3.Cliente.Web.Models
+@using MagicEye3.Cliente.Web.Service.IService
+@using MagicEye3.Cliente.Web.Utility
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+@* <h3>Registro</h3>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+<EditForm Model="registrationModel" OnValidSubmit="HandleRegistration">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Email:</label>
+        <InputText @bind-Value="registrationModel.Email" />
+    </div>
+    <div>
+        <label>Nombre:</label>
+        <InputText @bind-Value="registrationModel.Name" />
+    </div>
+    <div>
+        <label>Teléfono:</label>
+        <InputText @bind-Value="registrationModel.PhoneNumber" />
+    </div>
+    <div>
+        <label>Contraseña:</label>
+        <InputText @bind-Value="registrationModel.Password" type="password" />
+    </div>
+    <div>
+        <label>Rol:</label>
+        <InputSelect @bind-Value="registrationModel.Role">
+            <option value="">--Selecciona un rol--</option>
+            @foreach (var role in roleList)
+            {
+                <option value="@role">@role</option>
+            }
+        </InputSelect>
+    </div>
+    <button type="submit">Registrarse</button>
+</EditForm> *@
+<div class="container mt-5">
+    <h3>Registro</h3>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+
+    <EditForm Model="registrationModel" OnValidSubmit="HandleRegistration">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label class="form-label">Email:</label>
+            <InputText @bind-Value="registrationModel.Email" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Nombre:</label>
+            <InputText @bind-Value="registrationModel.Name" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Teléfono:</label>
+            <InputText @bind-Value="registrationModel.PhoneNumber" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Contraseña:</label>
+            <InputText @bind-Value="registrationModel.Password" type="password" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Rol:</label>
+            <InputSelect @bind-Value="registrationModel.Role" class="form-select">
+                <option value="">--Selecciona un rol--</option>
+                @foreach (var role in roleList)
+                {
+                    <option value="@role">@role</option>
+                }
+            </InputSelect>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </EditForm>
+</div>
+
+
+@code {
+    private RegistrationRequestDto registrationModel = new RegistrationRequestDto();
+    private string errorMessage;
+    private List<string> roleList = new() { SD.RoleAdmin, SD.RoleCustomer };
+
+    private async Task HandleRegistration()
+    {
+        // Intentar registrar al usuario
+        var response = await AuthService.RegisterAsync(registrationModel);
+
+        if (response != null && response.IsSuccess)
+        {
+            // Si no se especificó un rol, asignar el rol por defecto
+            if (string.IsNullOrEmpty(registrationModel.Role))
+            {
+                registrationModel.Role = SD.RoleCustomer;
+            }
+
+            // Asignar el rol al usuario
+            var assignRoleResponse = await AuthService.AssignRoleAsync(registrationModel);
+
+            if (assignRoleResponse != null && assignRoleResponse.IsSuccess)
+            {
+                // Registro y asignación de rol exitosos
+                // Redirigir al usuario a la página de inicio de sesión
+                NavigationManager.NavigateTo("/login");
+            }
+            else
+            {
+                // Manejar el error al asignar el rol
+                errorMessage = assignRoleResponse?.Message ?? "Error al asignar el rol.";
+            }
+        }
+        else
+        {
+            // Manejar el error de registro
+            errorMessage = response?.Message ?? "Error al registrar el usuario.";
+        }
+    }
+}

@@ -1,0 +1,116 @@
+﻿@* @page "/create-carrera"
+
+@attribute [Authorize(Roles = "ADMIN")]
+
+@using MagicEye3.Cliente.Web.Models
+@using MagicEye3.Cliente.Web.Service.IService
+@using Microsoft.AspNetCore.Authorization
+@inject ICarreraService CarreraService
+@inject NavigationManager NavigationManager
+
+<h3>Crear Nueva Carrera</h3>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">@successMessage</div>
+}
+
+<EditForm Model="carreraModel" OnValidSubmit="HandleCreateCarrera">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Nombre de la Carrera:</label>
+        <InputText @bind-Value="carreraModel.Nombre" />
+    </div>
+    <button type="submit">Crear Carrera</button>
+</EditForm>
+
+@code {
+    private CarreraDto carreraModel = new CarreraDto();
+    private string errorMessage;
+    private string successMessage;
+
+    private async Task HandleCreateCarrera()
+    {
+        var response = await CarreraService.CreateCarreraAsync(carreraModel);
+
+        if (response != null && response.IsSuccess)
+        {
+            successMessage = "Carrera creada exitosamente.";
+            carreraModel = new CarreraDto(); // Limpiar el formulario
+        }
+        else
+        {
+            errorMessage = response?.Message ?? "Error al crear la carrera.";
+        }
+    }
+}
+ *@
+ @page "/create-carrera"
+@attribute [Authorize(Roles = "ADMIN")]
+@using MagicEye3.Cliente.Web.Models
+@using MagicEye3.Cliente.Web.Service.IService
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@inject ICarreraService CarreraService
+@inject NavigationManager NavigationManager
+
+<AuthorizeView Roles="ADMIN">
+    <Authorized Context="authContext">
+        <!-- Contenido para usuarios autorizados -->
+        <h3>Crear Nueva Carrera</h3>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
+
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            <div class="alert alert-success">@successMessage</div>
+        }
+
+        <EditForm Model="carreraModel" OnValidSubmit="HandleCreateCarrera">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="mb-3">
+                <label class="form-label">Nombre de la Carrera:</label>
+                <InputText @bind-Value="carreraModel.Nombre" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Crear Carrera</button>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        <!-- Contenido para usuarios no autorizados -->
+        <h3>Acceso Denegado</h3>
+        <p>No tienes permiso para acceder a esta página.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private CarreraDto carreraModel = new CarreraDto();
+    private string errorMessage;
+    private string successMessage;
+
+    private async Task HandleCreateCarrera()
+    {
+        var response = await CarreraService.CreateCarreraAsync(carreraModel);
+
+        if (response != null && response.IsSuccess)
+        {
+            successMessage = "Carrera creada exitosamente.";
+            carreraModel = new CarreraDto(); // Limpiar el formulario
+        }
+        else
+        {
+            errorMessage = response?.Message ?? "Error al crear la carrera.";
+        }
+    }
+}

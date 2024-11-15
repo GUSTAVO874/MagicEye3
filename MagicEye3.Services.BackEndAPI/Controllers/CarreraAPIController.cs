@@ -2,6 +2,7 @@
 using MagicEye3.Services.BackEndAPI.Data;
 using MagicEye3.Services.BackEndAPI.Models;
 using MagicEye3.Services.BackEndAPI.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace MagicEye3.Services.BackEndAPI.Controllers
 {
     [Route("api/carrera")]
     [ApiController]
+    [Authorize]
     public class CarreraAPIController : ControllerBase
     {
         private readonly AppDbContext _db;
@@ -22,6 +24,7 @@ namespace MagicEye3.Services.BackEndAPI.Controllers
             _mapper = mapper;
         }
         [HttpPost("savecarrera")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<ResponseDto> PostCarrera([FromBody] CarreraDto carreraDto)
         {
             //save de una sola entidad 

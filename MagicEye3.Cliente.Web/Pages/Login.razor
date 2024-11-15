@@ -1,0 +1,63 @@
+﻿@page "/login"
+@using MagicEye3.Cliente.Web.Models
+@using MagicEye3.Cliente.Web.Service
+@using MagicEye3.Cliente.Web.Service.IService
+@using Microsoft.AspNetCore.Components.Authorization
+@using Newtonsoft.Json;
+@inject IAuthService AuthService
+@inject ITokenProvider TokenProvider
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
+
+<h3>Iniciar Sesión</h3>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+<EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Usuario:</label>
+        <InputText @bind-Value="loginModel.UserName" />
+    </div>
+    <div>
+        <label>Contraseña:</label>
+        <InputText @bind-Value="loginModel.Password" type="password" />
+    </div>
+    <button type="submit">Iniciar Sesión</button>
+</EditForm>
+
+@code {
+    private LoginRequestDto loginModel = new LoginRequestDto();
+    private string errorMessage;
+
+    private async Task HandleLogin()
+    {
+        // Intentar iniciar sesión
+        var response = await AuthService.LoginAsync(loginModel);
+
+        if (response != null && response.IsSuccess)
+        {
+            var loginResponse = JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(response.Result));
+
+            // Almacenar el token
+            await TokenProvider.SetTokenAsync(loginResponse.Token);
+
+            // Notificar al AuthenticationStateProvider
+            var customAuthStateProvider = (CustomAuthStateProvider)AuthStateProvider;
+            customAuthStateProvider.NotifyUserAuthentication(loginResponse.Token);
+
+            // Redirigir al usuario a la página principal
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            // Manejar el error de inicio de sesión
+            errorMessage = response?.Message ?? "Error al iniciar sesión.";
+        }
+    }
+}
