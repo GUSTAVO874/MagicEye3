@@ -1,0 +1,18 @@
+{
+    "httpPort": 5488,
+    "store": {
+      "provider": "fs"
+    },
+    "blobStorage": "fs",
+    "extensions": {
+      "scripts": {
+        "timeout": 180000
+      },
+      "xlsx": {},
+      "docx": {},
+      "assets": {
+        "allowedFiles": "**/*.*",
+        "searchOnDiskIfNotFoundInStore": true
+      }
+    }
+  }

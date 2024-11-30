@@ -1,92 +1,3 @@
-//using AutoMapper;
-//using MagicEye3.Services.BackEndAPI.Data;
-//using MagicEye3.Services.BackEndAPI.Extensions;
-//using Microsoft.AspNetCore.Authentication.JwtBearer;
-//using Microsoft.EntityFrameworkCore;
-//using Microsoft.OpenApi.Models;
-
-//var builder = WebApplication.CreateBuilder(args);
-
-//// Agregar el contexto de base de datos
-//builder.Services.AddDbContext<AppDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-//// Registrar servicio AutoMapper
-//var config = new MapperConfiguration(cfg => {
-//    cfg.AddProfile<MagicEye2.Services.BackEndAPI.MappingConfig>();
-//});
-
-//IMapper mapper = config.CreateMapper();
-//builder.Services.AddSingleton(mapper);
-
-//// Agregar controladores
-//builder.Services.AddControllers();
-
-//// Configurar Swagger
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen(option =>
-//{
-//    option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
-//    {
-//        Name = "Authorization",
-//        Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
-//        In = ParameterLocation.Header,
-//        Type = SecuritySchemeType.ApiKey,
-//        Scheme = "Bearer"
-//    });
-//    option.AddSecurityRequirement(new OpenApiSecurityRequirement
-//    {
-//        {
-//            new OpenApiSecurityScheme
-//            {
-//                Reference= new OpenApiReference
-//                {
-//                    Type=ReferenceType.SecurityScheme,
-//                    Id=JwtBearerDefaults.AuthenticationScheme
-//                }
-//            }, new string[]{}
-//        }
-//    });
-//});
-//builder.AddAppAuthetication();
-
-//builder.Services.AddAuthorization();
-
-//// **Leer los orígenes permitidos desde la configuración**
-//var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
-
-//// Configurar CORS
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("CorsPolicy", policy =>
-//    {
-//        policy.WithOrigins(allowedOrigins)
-//              .AllowAnyMethod()
-//              .AllowAnyHeader();
-//    });
-//});
-
-//var app = builder.Build();
-
-//// Usar CORS
-//app.UseCors("CorsPolicy");
-
-//// Configurar el pipeline de solicitudes HTTP
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseHttpsRedirection();
-//app.UseAuthentication();
-//app.UseAuthorization();
-
-//app.MapControllers();
-
-//app.Run();
-
-
 using AutoMapper;
 using MagicEye3.Services.BackEndAPI.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -95,7 +6,48 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
+using jsreport.AspNetCore;
+using jsreport.Local;
+using jsreport.Types;
+using jsreport.Binary;
+using System.IO;
+using System.Diagnostics;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//// Configurar jsreport como utilidad sin middleware, funcionó para generar pdf
+//builder.Services.AddJsReport(new LocalReporting()
+//    .UseBinary(JsReportBinary.GetBinary())
+//    .Configure(cfg => cfg
+//        .DoTrustUserCode() // Reemplaza AllowedLocalFilesAccess()
+//        .BaseUrlAsWorkingDirectory()
+//    // Eliminar ReadResponseHeadersFromServer()
+//    )
+//    .AsUtility()
+//    .Create());
+// Configurar jsreport para usar la instalación personalizada
+//builder.Services.AddJsReport(new LocalReporting()
+//    .UseBinary(Process.GetCurrentProcess().MainModule.FileName) // Utiliza el ejecutable actual
+//    .Configure(cfg => cfg
+//        .DoTrustUserCode()
+//        .BaseUrlAsWorkingDirectory()
+//    )
+//    .KillRunningJsReportProcesses()
+//    .RunInDirectory(Path.Combine(Directory.GetCurrentDirectory(), "jsreport")) // Ruta a la carpeta jsreport
+//    .AsUtility()
+//    .Create());
+
+// Configurar jsreport para usar la instalación personalizada
+//builder.Services.AddJsReport(new LocalReporting()
+//    .RunInDirectory(Path.Combine(Directory.GetCurrentDirectory(), "jsreport")) // Ruta a la carpeta jsreport
+//    .Configure(cfg => cfg
+//        .DoTrustUserCode()
+//        .BaseUrlAsWorkingDirectory()
+//    )
+//    .KillRunningJsReportProcesses()
+//    .AsUtility()
+//    .Create());
+
 
 // Agregar el contexto de base de datos
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -171,17 +123,29 @@ builder.Services.AddAuthorization();
 var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
 
 // Configurar CORS
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("CorsPolicy", policy =>
+//    {
+//        policy.WithOrigins(allowedOrigins)
+//              .AllowAnyMethod()
+//              .AllowAnyHeader();
+//    });
+//});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
     {
-        policy.WithOrigins(allowedOrigins)
+        policy.AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
 });
 
 var app = builder.Build();
+
+// Usar jsreport middleware
+//app.UseJsReport();
 
 // Usar CORS
 app.UseCors("CorsPolicy");

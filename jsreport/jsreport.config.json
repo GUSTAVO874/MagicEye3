@@ -1,0 +1,10 @@
+{
+    "httpPort": 5488,
+    "store": {
+      "provider": "fs"
+    },
+    "extensions": {
+      "xlsx": {},
+      "docx": {}
+    }
+  }  

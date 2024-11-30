@@ -2,8 +2,7 @@
 {
     public class SD
     {
-        //public static string MaestroTBeneficiarioAPIBase { get; set; }
-        //public static string AuthAPIBase { get; set; }
+        
         public static string AuthAPIBase { get; set; } = "https://localhost:7240/";
         public static string BackEndAPIBase { get; set; } = "https://localhost:7109/";
 

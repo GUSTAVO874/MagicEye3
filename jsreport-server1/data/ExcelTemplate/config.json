@@ -1,0 +1,24 @@
+{
+    "shortid": "ns6LSKef-K",
+    "name": "ExcelTemplate",
+    "recipe": "xlsx",
+    "engine": "handlebars",
+    "chrome": {
+        "printBackground": true
+    },
+    "xlsxTemplate": null,
+    "creationDate": {
+        "$$date": 1732249822785
+    },
+    "modificationDate": {
+        "$$date": 1732334514416
+    },
+    "_id": "83E8tUoiePg4rpxQ",
+    "$entitySet": "templates",
+    "xlsx": {
+        "templateAssetShortid": "UzofSQE"
+    },
+    "data": {
+        "shortid": "wjEQYPERPY"
+    }
+}

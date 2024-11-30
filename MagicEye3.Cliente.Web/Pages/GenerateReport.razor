@@ -1,0 +1,102 @@
+﻿@page "/generate-report"
+@attribute [Authorize(Roles = "ADMIN")]
+@using MagicEye3.Cliente.Web.Models
+@using MagicEye3.Cliente.Web.Service.IService
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@inject IReportService ReportService
+
+<AuthorizeView Roles="ADMIN">
+    <Authorized Context="autorizadosContexto">
+        <h3>Generar Reporte</h3>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
+
+        <EditForm Model="reportData" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="mb-3">
+                <label class="form-label">Nombre:</label>
+                <InputText @bind-Value="reportData.Nombre" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Edad:</label>
+                <InputNumber @bind-Value="reportData.Edad" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Correo:</label>
+                <InputText @bind-Value="reportData.Correo" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Formato:</label>
+                <InputSelect @bind-Value="reportData.Formato" class="form-control">
+                    <option value="pdf">PDF</option>
+                    <option value="xlsx">Excel</option>
+                    <option value="docx">Word</option>
+                </InputSelect>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Generar Reporte</button>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        <h3>Acceso Denegado</h3>
+        <p>No tienes permiso para acceder a esta página.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private ReportDataDto reportData = new ReportDataDto();
+    private string errorMessage;
+
+    //funcionaba para generar pdf
+    // private async Task HandleValidSubmit()
+    // {
+    //     var response = await ReportService.GenerateReportAsync(reportData);
+
+    //     if (response.IsSuccessStatusCode)
+    //     {
+    //         var content = await response.Content.ReadAsByteArrayAsync();
+    //         var fileName = "Reporte.pdf";
+
+    //         // Descargar el archivo en el navegador
+    //         using var streamRef = new DotNetStreamReference(stream: new MemoryStream(content));
+
+    //         await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+    //     }
+    //     else
+    //     {
+    //         errorMessage = "Error al generar el reporte.";
+    //     }
+    // }
+
+    //para dtos office
+    private async Task HandleValidSubmit()
+    {
+        var response = await ReportService.GenerateReportAsync(reportData);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsByteArrayAsync();
+            var contentType = response.Content.Headers.ContentType.MediaType;
+            var fileName = response.Content.Headers.ContentDisposition?.FileName?.Trim('"') ?? "Reporte";
+
+            // Descargar el archivo en el navegador
+            using var streamRef = new DotNetStreamReference(stream: new MemoryStream(content));
+
+            await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef, contentType);
+        }
+        else
+        {
+            errorMessage = "Error al generar el reporte.";
+        }
+    }
+
+
+    [Inject]
+    private IJSRuntime JS { get; set; }
+}

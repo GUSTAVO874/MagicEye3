@@ -1,0 +1,23 @@
+{
+    "shortid": "NdpYv_KMv-",
+    "name": "xlsx invoice",
+    "recipe": "xlsx",
+    "engine": "handlebars",
+    "chrome": {
+        "printBackground": true
+    },
+    "creationDate": {
+        "$$date": 1732330987210
+    },
+    "modificationDate": {
+        "$$date": 1732331347339
+    },
+    "_id": "nPOFZbb0ggMK51P1",
+    "$entitySet": "templates",
+    "data": {
+        "shortid": "9T5Xx6dfoY"
+    },
+    "xlsx": {
+        "templateAssetShortid": "RAXlB7v"
+    }
+}

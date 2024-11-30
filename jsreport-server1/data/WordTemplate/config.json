@@ -1,0 +1,21 @@
+{
+    "shortid": "OmW9bo7ACm",
+    "name": "WordTemplate",
+    "recipe": "docx",
+    "engine": "handlebars",
+    "chrome": {
+        "printBackground": true
+    },
+    "data": null,
+    "docx": {
+        "templateAssetShortid": "rosNnma"
+    },
+    "creationDate": {
+        "$$date": 1732244176001
+    },
+    "modificationDate": {
+        "$$date": 1732915852744
+    },
+    "_id": "VxTSsjgfz48xioSC",
+    "$entitySet": "templates"
+}

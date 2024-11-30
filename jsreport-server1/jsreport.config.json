@@ -1,0 +1,24 @@
+{
+  "httpPort": 5488,
+  "store": {
+    "provider": "fs"
+  },
+  "extensions": {
+    "authentication": {
+      "cookieSession": {
+        "secret": "sdfasdfs234dfgd3423423ghfh456467ghghj34545dfgsfgdfg345345dfgsdfg"
+      },
+      "admin": {
+        "username": "admin",
+        "password": "password"
+      },
+      "enabled": true
+    },
+    "xlsx": {},
+    "docx": {},
+    "assets": {
+      "allowedFiles": "**/*.*",
+      "searchOnDiskIfNotFoundInStore": true
+    }
+  }
+}

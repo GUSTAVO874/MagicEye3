@@ -50,6 +50,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddScoped<ICarreraService, CarreraService>(); // Añade este registro
+builder.Services.AddScoped<IReportService, ReportService>();
+
 
 // Registra el AuthenticationStateProvider
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();

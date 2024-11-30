@@ -1,0 +1,17 @@
+{
+    "shortid": "6htZLlZS9M",
+    "name": "PdfTemplate",
+    "recipe": "chrome-pdf",
+    "engine": "handlebars",
+    "chrome": {
+        "printBackground": true
+    },
+    "creationDate": {
+        "$$date": 1732243174981
+    },
+    "modificationDate": {
+        "$$date": 1732243174981
+    },
+    "_id": "YDa6EaGzjCt4RNXy",
+    "$entitySet": "templates"
+}
