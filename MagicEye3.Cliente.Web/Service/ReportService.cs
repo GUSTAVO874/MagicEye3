@@ -37,7 +37,15 @@ namespace MagicEye3.Cliente.Web.Service
             var response = await _httpClient.PostAsJsonAsync(SD.BackEndAPIBase + "api/report/generate" + query, data);
             return response;
         }
+        //public async Task<HttpResponseMessage> GenerateAnaliticAsync(ReportAnaliticoDto data)
+        //{
+        //    var token = await _tokenProvider.GetTokenAsync();
+        //    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
+        //    var query = $"?format={data.Formato}";
+        //    var response = await _httpClient.PostAsJsonAsync(SD.BackEndAPIBase + "api/report/generateanalitic" + query, data);
+        //    return response;
+        //}
 
     }
 }

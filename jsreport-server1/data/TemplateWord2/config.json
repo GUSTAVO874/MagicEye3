@@ -1,0 +1,23 @@
+{
+    "shortid": "TLH9voyCxr",
+    "name": "TemplateWord2",
+    "recipe": "docx",
+    "engine": "handlebars",
+    "chrome": {
+        "printBackground": true
+    },
+    "creationDate": {
+        "$$date": 1736117031629
+    },
+    "modificationDate": {
+        "$$date": 1740154202288
+    },
+    "_id": "Jer3SusdOtDBS2ai",
+    "$entitySet": "templates",
+    "data": {
+        "shortid": "-Ye6L1loi4"
+    },
+    "docx": {
+        "templateAssetShortid": "_v4dEK_"
+    }
+}

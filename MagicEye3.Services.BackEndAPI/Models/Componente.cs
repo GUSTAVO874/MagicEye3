@@ -8,6 +8,6 @@ namespace MagicEye3.Services.BackEndAPI.Models
         public int ComponenteId { get; set; }
         public string Nombre { get; set; }
         public ICollection<ComponenteActividad> ComponenteActividades { get; set; }
-        public ICollection<ContenidoComponente> ContenidoComponentes { get; set; }
+        //public ICollection<ContenidoComponente> ContenidoComponentes { get; set; }
     }
 }

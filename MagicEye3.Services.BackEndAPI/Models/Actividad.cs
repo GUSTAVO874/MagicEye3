@@ -16,5 +16,6 @@ namespace MagicEye3.Services.BackEndAPI.Models
         public int Tiempo { get; set; }
 
         public ICollection<ComponenteActividad> ComponenteActividades { get; set; }
+        public ICollection<ContenidoActividad> ContenidoActividades { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace MagicEye3.Services.BackEndAPI.Models
     {
         [Key]
         public int FechaId { get; set; }
-        public DateOnly laFecha { get; set; }
+        public DateTime laFecha { get; set; }
 
         // Add this navigation property
         public ICollection<FechaContenido> FechaContenidos { get; set; }

@@ -1,0 +1,36 @@
+{
+  
+  "Tablas": [
+    {
+      "Fecha": "2024-11-06",
+      "NombreUnidad": "Unidad 1",
+      "DescripCont": "tipos de datos",
+      "DatosCentrales": [
+        {
+          "Actividad": "Clase Magistral",
+          "CompApr": "ACD",
+          "Tiempo": 2,
+          "Evaluacion": "Preguntas en clase"
+        },
+        {
+          "Actividad": "Exposición",
+          "CompApr": "AA",
+          "Tiempo": 1,
+          "Evaluacion": "Revisión y discusión"
+        }
+      ]
+    },
+    {
+      "Fecha": "2024-11-13",
+      "NombreUnidad": "Unidad 2",
+      "DescripCont": "Enumeradores",
+      "DatosCentrales": [
+        {
+          "DescripCont": "Tipos abstractos",
+          "Actividad": "Laboratorio",
+          "Evaluacion": "Examen parcial"
+        }
+      ]
+    }
+  ]
+}

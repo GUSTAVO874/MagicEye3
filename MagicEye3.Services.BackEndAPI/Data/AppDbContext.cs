@@ -19,7 +19,8 @@ namespace MagicEye3.Services.BackEndAPI.Data
         public DbSet<Componente> Componentes { get; set; }
         public DbSet<ComponenteActividad> ComponenteActividades { get; set; }
         public DbSet<Contenido> Contenidos { get; set; }
-        public DbSet<ContenidoComponente> ContenidoComponentes { get; set; }
+        //public DbSet<ContenidoComponente> ContenidoComponentes { get; set; }
+        public DbSet<ContenidoActividad> ContenidoActividades { get; set; }
         public DbSet<Evaluacion> Evaluaciones { get; set; }
         public DbSet<Fecha> Fechas { get; set; }
         public DbSet<FechaContenido> FechaContenidos { get; set; }
@@ -54,19 +55,35 @@ namespace MagicEye3.Services.BackEndAPI.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Many-to-Many: ContenidoComponente (Contenido <-> Componente)
-            modelBuilder.Entity<ContenidoComponente>()
-                .HasKey(cc => new { cc.ContenidoId, cc.ComponenteId });
+            //modelBuilder.Entity<ContenidoComponente>()
+            //    .HasKey(cc => new { cc.ContenidoId, cc.ComponenteId });
 
-            modelBuilder.Entity<ContenidoComponente>()
+            //modelBuilder.Entity<ContenidoComponente>()
+            //    .HasOne(cc => cc.Contenido)
+            //    .WithMany(c => c.ContenidoComponentes)
+            //    .HasForeignKey(cc => cc.ContenidoId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<ContenidoComponente>()
+            //    .HasOne(cc => cc.Componente)
+            //    .WithMany(c => c.ContenidoComponentes)
+            //    .HasForeignKey(cc => cc.ComponenteId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            // Many-to-Many: ContenidoActividad (Contenido <-> Actividad)
+            modelBuilder.Entity<ContenidoActividad>()
+                .HasKey(cc => new { cc.ContenidoId, cc.ActividadId });
+
+            modelBuilder.Entity<ContenidoActividad>()
                 .HasOne(cc => cc.Contenido)
-                .WithMany(c => c.ContenidoComponentes)
+                .WithMany(c => c.ContenidoActividades)
                 .HasForeignKey(cc => cc.ContenidoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<ContenidoComponente>()
-                .HasOne(cc => cc.Componente)
-                .WithMany(c => c.ContenidoComponentes)
-                .HasForeignKey(cc => cc.ComponenteId)
+            modelBuilder.Entity<ContenidoActividad>()
+                .HasOne(cc => cc.Actividad)
+                .WithMany(c => c.ContenidoActividades)
+                .HasForeignKey(cc => cc.ActividadId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Many-to-Many: FechaContenido (Fecha <-> Contenido)

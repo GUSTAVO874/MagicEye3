@@ -13,7 +13,8 @@ namespace MagicEye3.Services.BackEndAPI.Models
         public Unidad? Unidad { get; set; }
 
         public string? Descripcion { get; set; }
-        public ICollection<ContenidoComponente> ContenidoComponentes { get; set; }
+        //public ICollection<ContenidoComponente> ContenidoComponentes { get; set; }
+        public ICollection<ContenidoActividad> ContenidoActividades { get; set; }
         public ICollection<FechaContenido> FechaContenidos { get; set; }
 
     }

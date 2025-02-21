@@ -1,0 +1,43 @@
+{
+  "Carrera": "Sistemas de Información",
+  "Periodo": "2024-2025",
+  "Ciclo": "C1",
+  "Parcial": "P1",
+  "Paralelo": "SIN-S-VE-2-5",
+  "Unidades": [
+    {
+      "NombreUnidad": "Unidad 1",
+      "Actividades": [
+        {
+          "Fecha": "2024-11-06",
+          "DescripCont": "tipos de datos",
+          "Actividad": "Clase Magistral",
+          "Evaluacion": "Revisión y discusión"
+        },
+        {
+          "Fecha": "2024-11-06",
+          "DescripCont": "Enumeradores",
+          "Actividad": "Clase Magistral",
+          "Evaluacion": "Revisión y discusión"
+        },
+        {
+          "Fecha": "2024-11-13",
+          "DescripCont": "Clases Java",
+          "Actividad": "Exposición",
+          "Evaluacion": "Revisión y discusión"
+        }
+      ]
+    },
+    {
+      "NombreUnidad": "Unidad 2",
+      "Actividades": [
+        {
+          "Fecha": "2024-11-20",
+          "DescripCont": "Tipos abstractos",
+          "Actividad": "Laboratorio",
+          "Evaluacion": "Examen parcial"
+        }
+       ]
+    }
+  ]
+}

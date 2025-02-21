@@ -8,6 +8,6 @@
 
         
         // Lista con valores predeterminados para probar la plantilla de jsreport
-        public List<string> Roles { get; set; } = new List<string> { "Admin", "User", "Guest" };
+        public List<string> Roles { get; set; } = new List<string> { "TestAdmin", "User", "Guest" };
     }
 }
