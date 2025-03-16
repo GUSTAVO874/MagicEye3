@@ -32,7 +32,7 @@ namespace MagicEye3.Services.BackEndAPI.Controllers
             JsReportRenderService renderService)
         {
             _context = context;
-            // Configuración del cliente jsreport
+            // Configuración del cliente jsreport..
             _reportingService = new ReportingService("http://localhost:5488", "admin", "password");
             //_reportingService = new ReportingService("http://127.0.0.1:5488", "admin", "password");
 
