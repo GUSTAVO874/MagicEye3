@@ -35,6 +35,7 @@ namespace MagicEye3.Cliente.Web.Service
 
             var query = $"?format={data.Formato}";
             var response = await _httpClient.PostAsJsonAsync(SD.BackEndAPIBase + "api/report/generate" + query, data);
+            //var response = await _httpClient.PostAsJsonAsync(SD.BackEndAPIBase + "api/report/GenerateReport3" + query, data);
             return response;
         }
         //public async Task<HttpResponseMessage> GenerateAnaliticAsync(ReportAnaliticoDto data)

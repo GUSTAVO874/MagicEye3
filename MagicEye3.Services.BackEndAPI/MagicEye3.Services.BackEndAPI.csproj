@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Handlebars.Net" Version="2.1.6" />
     <PackageReference Include="jsreport.AspNetCore" Version="3.8.1" />
     <PackageReference Include="jsreport.Binary" Version="4.4.0" />
     <PackageReference Include="jsreport.Client" Version="3.8.1" />

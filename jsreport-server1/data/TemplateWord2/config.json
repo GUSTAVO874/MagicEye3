@@ -10,14 +10,12 @@
         "$$date": 1736117031629
     },
     "modificationDate": {
-        "$$date": 1740154202288
+        "$$date": 1741988518298
     },
     "_id": "Jer3SusdOtDBS2ai",
     "$entitySet": "templates",
-    "data": {
-        "shortid": "-Ye6L1loi4"
-    },
+    "data": null,
     "docx": {
-        "templateAssetShortid": "_v4dEK_"
+        "templateAssetShortid": "HbvSv4b"
     }
 }

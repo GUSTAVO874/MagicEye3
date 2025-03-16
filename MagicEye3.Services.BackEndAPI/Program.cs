@@ -12,6 +12,8 @@ using jsreport.Types;
 using jsreport.Binary;
 using System.IO;
 using System.Diagnostics;
+using MagicEye3.Services.BackEndAPI.Engines.Queries;
+using MagicEye3.Services.BackEndAPI.Engines.Render;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +54,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Agregar el contexto de base de datos
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddTransient<jsreport.Client.IReportingService>(_ =>
+    new jsreport.Client.ReportingService(
+        // Constructor con URL, user y pass
+        "http://localhost:5488",
+        "admin",
+        "password"
+    )
+);
+
+builder.Services.AddScoped<AnaliticoQueries>();
+builder.Services.AddScoped<JsReportRenderService>();
 
 // Registrar servicio AutoMapper
 var config = new MapperConfiguration(cfg =>
@@ -141,6 +155,7 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
+
 
 var app = builder.Build();
 
