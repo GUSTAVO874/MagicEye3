@@ -5,45 +5,7 @@
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 
-@* <h3>Registro</h3>
 
-@if (!string.IsNullOrEmpty(errorMessage))
-{
-    <div class="alert alert-danger">@errorMessage</div>
-}
-
-<EditForm Model="registrationModel" OnValidSubmit="HandleRegistration">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div>
-        <label>Email:</label>
-        <InputText @bind-Value="registrationModel.Email" />
-    </div>
-    <div>
-        <label>Nombre:</label>
-        <InputText @bind-Value="registrationModel.Name" />
-    </div>
-    <div>
-        <label>Teléfono:</label>
-        <InputText @bind-Value="registrationModel.PhoneNumber" />
-    </div>
-    <div>
-        <label>Contraseña:</label>
-        <InputText @bind-Value="registrationModel.Password" type="password" />
-    </div>
-    <div>
-        <label>Rol:</label>
-        <InputSelect @bind-Value="registrationModel.Role">
-            <option value="">--Selecciona un rol--</option>
-            @foreach (var role in roleList)
-            {
-                <option value="@role">@role</option>
-            }
-        </InputSelect>
-    </div>
-    <button type="submit">Registrarse</button>
-</EditForm> *@
 <div class="container mt-5">
     <h3>Registro</h3>
 
