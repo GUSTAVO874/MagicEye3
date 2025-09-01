@@ -51,7 +51,7 @@ var builder = WebApplication.CreateBuilder(args);
 //    .Create());
 
 
-// Agregar el contexto de base de datos
+// Agregar contexto de base de datos
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
