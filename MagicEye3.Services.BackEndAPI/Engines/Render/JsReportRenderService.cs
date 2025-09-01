@@ -19,6 +19,7 @@ namespace MagicEye3.Services.BackEndAPI.Engines.Render
         /// 
         /// dataWrapper: debe ser un objeto con la data que la plantilla espera,
         /// por ejemplo: new { Items = (listado agrupado) }.
+        /// Utiliza un HELPER para acceder a los elementos de la lista y mostralos en JSREPORT:
         /// </summary>
         public async Task<MemoryStream> RenderAnaliticoAsync(object dataWrapper, string format = "pdf")
         {

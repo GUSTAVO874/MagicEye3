@@ -30,6 +30,14 @@ namespace MagicEye3.Services.BackEndAPI.Data
         public DbSet<Silabo> Silabos { get; set; }
         public DbSet<SilaboGrupo> SilaboGrupos { get; set; }
         public DbSet<Unidad> Unidades { get; set; }
+        public DbSet<Asignatura> Asignaturas { get; set; }
+        //public DbSet<AsignaturaDia> AsignaturaDias { get; set; }
+        //public DbSet<Dia> Dias { get; set; }
+        public DbSet<Calendario> Calendarios { get; set; }
+        public DbSet<AsignaturaCalendario> AsignaturaCalendarios { get; set; }
+        public DbSet<SilaboComponente> SilaboComponentes { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -187,6 +195,54 @@ namespace MagicEye3.Services.BackEndAPI.Data
             // }
 
             // Similarly, initialize collections in other models
+
+            // Many-to-Many: Asignatura <-> Dia con horario
+            //modelBuilder.Entity<AsignaturaDia>()
+            //    .HasKey(ad => new { ad.AsignaturaId, ad.DiaId, ad.HoraInicio });
+
+            //modelBuilder.Entity<AsignaturaDia>()
+            //    .HasOne(ad => ad.Asignatura)
+            //    .WithMany(a => a.AsignaturaDias)
+            //    .HasForeignKey(ad => ad.AsignaturaId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<AsignaturaDia>()
+            //    .HasOne(ad => ad.Dia)
+            //    .WithMany(d => d.AsignaturaDias)
+            //    .HasForeignKey(ad => ad.DiaId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AsignaturaCalendario>()
+                .HasKey(ac => new { ac.AsignaturaId, ac.CalendarioId, ac.HoraInicio });
+
+            modelBuilder.Entity<AsignaturaCalendario>()
+                .HasOne(ac => ac.Asignatura)
+                .WithMany(a => a.AsignaturaCalendarios)
+                .HasForeignKey(ac => ac.AsignaturaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AsignaturaCalendario>()
+                .HasOne(ac => ac.Calendario)
+                .WithMany(c => c.AsignaturaCalendarios)
+                .HasForeignKey(ac => ac.CalendarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Many-to-Many: Silabo <-> Componente con entidad intermedia (SilaboComponente)
+            modelBuilder.Entity<SilaboComponente>()
+                .HasKey(sc => new { sc.SilaboId, sc.ComponenteId });
+
+            modelBuilder.Entity<SilaboComponente>()
+                .HasOne(sc => sc.Silabo)
+                .WithMany(s => s.SilaboComponentes)
+                .HasForeignKey(sc => sc.SilaboId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SilaboComponente>()
+                .HasOne(sc => sc.Componente)
+                .WithMany(c => c.SilaboComponentes)
+                .HasForeignKey(sc => sc.ComponenteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

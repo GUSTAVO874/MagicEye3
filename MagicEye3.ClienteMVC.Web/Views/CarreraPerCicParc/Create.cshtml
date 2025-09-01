@@ -1,0 +1,42 @@
+﻿@model MagicEye3.ClienteMVC.Web.Models.CarreraPerCicParcDto
+@{
+    ViewData["Title"] = "Crear Carrera-Periodo-Ciclo-Parcial";
+}
+
+<h2>Crear Carrera-Periodo-Ciclo-Parcial</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@using (Html.BeginForm("Create", "CarreraPerCicParc", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label">Nombre Carrera</label>
+        @Html.TextBoxFor(m => m.Carrera.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Carrera.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Nombre Periodo</label>
+        @Html.TextBoxFor(m => m.Periodo.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Periodo.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Identificación Ciclo</label>
+        @Html.TextBoxFor(m => m.Ciclo.Identificacion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Ciclo.Identificacion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Nombre Parcial</label>
+        @Html.TextBoxFor(m => m.Parcial.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Parcial.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+}

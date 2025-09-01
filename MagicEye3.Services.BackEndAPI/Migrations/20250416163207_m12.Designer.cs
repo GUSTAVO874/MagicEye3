@@ -4,6 +4,7 @@ using MagicEye3.Services.BackEndAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicEye3.Services.BackEndAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250416163207_m12")]
+    partial class m12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -381,10 +384,7 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Property<int>("ComponenteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("HoraClase")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Tiempo")
+                    b.Property<int>("Tiempoenminutos")
                         .HasColumnType("int");
 
                     b.HasKey("SilaboId", "ComponenteId");

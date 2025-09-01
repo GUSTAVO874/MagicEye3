@@ -23,6 +23,6 @@ namespace MagicEye3.Cliente.Web.Service
             });
         }
 
-        // Implementa otros métodos si es necesario
+        
     }
 }

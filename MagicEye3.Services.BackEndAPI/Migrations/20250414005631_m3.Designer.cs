@@ -4,6 +4,7 @@ using MagicEye3.Services.BackEndAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicEye3.Services.BackEndAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250414005631_m3")]
+    partial class m3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,17 +78,8 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Property<TimeSpan>("HoraInicio")
                         .HasColumnType("time");
 
-                    b.Property<bool>("Examen")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("FinClases")
-                        .HasColumnType("bit");
-
                     b.Property<TimeSpan>("HoraFin")
                         .HasColumnType("time");
-
-                    b.Property<bool>("InicioClases")
-                        .HasColumnType("bit");
 
                     b.HasKey("AsignaturaId", "CalendarioId", "HoraInicio");
 
@@ -105,6 +99,15 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Property<int>("Anio")
                         .HasColumnType("int");
 
+                    b.Property<bool>("DiaLabor")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Examen")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Feriado")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Mes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -115,9 +118,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
 
                     b.Property<int>("Numerodia")
                         .HasColumnType("int");
-
-                    b.Property<bool>("SinClases")
-                        .HasColumnType("bit");
 
                     b.HasKey("CalendarioId");
 
@@ -381,10 +381,7 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Property<int>("ComponenteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("HoraClase")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Tiempo")
+                    b.Property<int>("Tiempoenminutos")
                         .HasColumnType("int");
 
                     b.HasKey("SilaboId", "ComponenteId");

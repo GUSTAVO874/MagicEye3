@@ -4,6 +4,7 @@ using MagicEye3.Services.BackEndAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicEye3.Services.BackEndAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250413223758_m2")]
+    partial class m2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,17 +78,8 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Property<TimeSpan>("HoraInicio")
                         .HasColumnType("time");
 
-                    b.Property<bool>("Examen")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("FinClases")
-                        .HasColumnType("bit");
-
                     b.Property<TimeSpan>("HoraFin")
                         .HasColumnType("time");
-
-                    b.Property<bool>("InicioClases")
-                        .HasColumnType("bit");
 
                     b.HasKey("AsignaturaId", "CalendarioId", "HoraInicio");
 
@@ -105,6 +99,15 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Property<int>("Anio")
                         .HasColumnType("int");
 
+                    b.Property<bool>("DiaLabor")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Examen")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Feriado")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Mes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -115,9 +118,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
 
                     b.Property<int>("Numerodia")
                         .HasColumnType("int");
-
-                    b.Property<bool>("SinClases")
-                        .HasColumnType("bit");
 
                     b.HasKey("CalendarioId");
 
@@ -373,27 +373,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.ToTable("Silabos");
                 });
 
-            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.SilaboComponente", b =>
-                {
-                    b.Property<int>("SilaboId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ComponenteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HoraClase")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Tiempo")
-                        .HasColumnType("int");
-
-                    b.HasKey("SilaboId", "ComponenteId");
-
-                    b.HasIndex("ComponenteId");
-
-                    b.ToTable("SilaboComponentes");
-                });
-
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.SilaboGrupo", b =>
                 {
                     b.Property<int>("SilaboId")
@@ -603,25 +582,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Navigation("Ciclo");
                 });
 
-            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.SilaboComponente", b =>
-                {
-                    b.HasOne("MagicEye3.Services.BackEndAPI.Models.Componente", "Componente")
-                        .WithMany("SilaboComponentes")
-                        .HasForeignKey("ComponenteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MagicEye3.Services.BackEndAPI.Models.Silabo", "Silabo")
-                        .WithMany("SilaboComponentes")
-                        .HasForeignKey("SilaboId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Componente");
-
-                    b.Navigation("Silabo");
-                });
-
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.SilaboGrupo", b =>
                 {
                     b.HasOne("MagicEye3.Services.BackEndAPI.Models.Grupo", "Grupo")
@@ -684,8 +644,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Componente", b =>
                 {
                     b.Navigation("ComponenteActividades");
-
-                    b.Navigation("SilaboComponentes");
                 });
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Contenido", b =>
@@ -719,8 +677,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Silabo", b =>
                 {
-                    b.Navigation("SilaboComponentes");
-
                     b.Navigation("SilaboGrupos");
 
                     b.Navigation("Unidades");

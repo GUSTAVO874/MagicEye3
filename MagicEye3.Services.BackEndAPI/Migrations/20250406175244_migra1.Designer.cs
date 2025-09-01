@@ -4,6 +4,7 @@ using MagicEye3.Services.BackEndAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicEye3.Services.BackEndAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250406175244_migra1")]
+    partial class migra1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,64 +67,25 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.ToTable("Asignaturas");
                 });
 
-            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.AsignaturaCalendario", b =>
+            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.AsignaturaDia", b =>
                 {
                     b.Property<int>("AsignaturaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CalendarioId")
+                    b.Property<int>("DiaId")
                         .HasColumnType("int");
 
                     b.Property<TimeSpan>("HoraInicio")
                         .HasColumnType("time");
 
-                    b.Property<bool>("Examen")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("FinClases")
-                        .HasColumnType("bit");
-
                     b.Property<TimeSpan>("HoraFin")
                         .HasColumnType("time");
 
-                    b.Property<bool>("InicioClases")
-                        .HasColumnType("bit");
+                    b.HasKey("AsignaturaId", "DiaId", "HoraInicio");
 
-                    b.HasKey("AsignaturaId", "CalendarioId", "HoraInicio");
+                    b.HasIndex("DiaId");
 
-                    b.HasIndex("CalendarioId");
-
-                    b.ToTable("AsignaturaCalendarios");
-                });
-
-            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Calendario", b =>
-                {
-                    b.Property<int>("CalendarioId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalendarioId"));
-
-                    b.Property<int>("Anio")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Mes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Numerodia")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("SinClases")
-                        .HasColumnType("bit");
-
-                    b.HasKey("CalendarioId");
-
-                    b.ToTable("Calendarios");
+                    b.ToTable("AsignaturaDias");
                 });
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Carrera", b =>
@@ -243,6 +207,23 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.HasIndex("ActividadId");
 
                     b.ToTable("ContenidoActividades");
+                });
+
+            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Dia", b =>
+                {
+                    b.Property<int>("DiaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DiaId"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DiaId");
+
+                    b.ToTable("Dias");
                 });
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Evaluacion", b =>
@@ -373,27 +354,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.ToTable("Silabos");
                 });
 
-            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.SilaboComponente", b =>
-                {
-                    b.Property<int>("SilaboId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ComponenteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HoraClase")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Tiempo")
-                        .HasColumnType("int");
-
-                    b.HasKey("SilaboId", "ComponenteId");
-
-                    b.HasIndex("ComponenteId");
-
-                    b.ToTable("SilaboComponentes");
-                });
-
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.SilaboGrupo", b =>
                 {
                     b.Property<int>("SilaboId")
@@ -458,23 +418,23 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Navigation("Evaluacion");
                 });
 
-            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.AsignaturaCalendario", b =>
+            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.AsignaturaDia", b =>
                 {
                     b.HasOne("MagicEye3.Services.BackEndAPI.Models.Asignatura", "Asignatura")
-                        .WithMany("AsignaturaCalendarios")
+                        .WithMany("AsignaturaDias")
                         .HasForeignKey("AsignaturaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MagicEye3.Services.BackEndAPI.Models.Calendario", "Calendario")
-                        .WithMany("AsignaturaCalendarios")
-                        .HasForeignKey("CalendarioId")
+                    b.HasOne("MagicEye3.Services.BackEndAPI.Models.Dia", "Dia")
+                        .WithMany("AsignaturaDias")
+                        .HasForeignKey("DiaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Asignatura");
 
-                    b.Navigation("Calendario");
+                    b.Navigation("Dia");
                 });
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.CarreraPeriodo", b =>
@@ -603,25 +563,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Navigation("Ciclo");
                 });
 
-            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.SilaboComponente", b =>
-                {
-                    b.HasOne("MagicEye3.Services.BackEndAPI.Models.Componente", "Componente")
-                        .WithMany("SilaboComponentes")
-                        .HasForeignKey("ComponenteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MagicEye3.Services.BackEndAPI.Models.Silabo", "Silabo")
-                        .WithMany("SilaboComponentes")
-                        .HasForeignKey("SilaboId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Componente");
-
-                    b.Navigation("Silabo");
-                });
-
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.SilaboGrupo", b =>
                 {
                     b.HasOne("MagicEye3.Services.BackEndAPI.Models.Grupo", "Grupo")
@@ -661,12 +602,7 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Asignatura", b =>
                 {
-                    b.Navigation("AsignaturaCalendarios");
-                });
-
-            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Calendario", b =>
-                {
-                    b.Navigation("AsignaturaCalendarios");
+                    b.Navigation("AsignaturaDias");
                 });
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Carrera", b =>
@@ -684,8 +620,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Componente", b =>
                 {
                     b.Navigation("ComponenteActividades");
-
-                    b.Navigation("SilaboComponentes");
                 });
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Contenido", b =>
@@ -693,6 +627,11 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
                     b.Navigation("ContenidoActividades");
 
                     b.Navigation("FechaContenidos");
+                });
+
+            modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Dia", b =>
+                {
+                    b.Navigation("AsignaturaDias");
                 });
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Evaluacion", b =>
@@ -719,8 +658,6 @@ namespace MagicEye3.Services.BackEndAPI.Migrations
 
             modelBuilder.Entity("MagicEye3.Services.BackEndAPI.Models.Silabo", b =>
                 {
-                    b.Navigation("SilaboComponentes");
-
                     b.Navigation("SilaboGrupos");
 
                     b.Navigation("Unidades");

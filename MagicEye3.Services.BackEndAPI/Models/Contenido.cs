@@ -12,8 +12,8 @@ namespace MagicEye3.Services.BackEndAPI.Models
         [ForeignKey("UnidadId")]
         public Unidad? Unidad { get; set; }
 
-        public string? Descripcion { get; set; }
-        //public ICollection<ContenidoComponente> ContenidoComponentes { get; set; }
+        public string? Descripcion { get; set; } //por ejemplo tipos primitivos, descrip de datos, etc.
+        
         public ICollection<ContenidoActividad> ContenidoActividades { get; set; }
         public ICollection<FechaContenido> FechaContenidos { get; set; }
 

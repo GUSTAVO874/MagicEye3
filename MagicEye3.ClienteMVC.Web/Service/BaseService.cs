@@ -3,6 +3,7 @@ using MagicEye3.ClienteMVC.Web.Service.IService;
 
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using static MagicEye3.ClienteMVC.Web.Utility.SD;
@@ -15,10 +16,12 @@ namespace MagicEye3.ClienteMVC.Web.Service
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ITokenProvider _tokenProvider;
-        public BaseService(IHttpClientFactory httpClientFactory, ITokenProvider tokenProvider)
+        private readonly IHttpContextAccessor _httpContextAccessor;//
+        public BaseService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
         {
             _httpClientFactory = httpClientFactory;
-            _tokenProvider = tokenProvider;
+            //_tokenProvider = tokenProvider;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<ResponseDto?> SendAsync(RequestDto requestDto, bool withBearer = true)
@@ -29,10 +32,19 @@ namespace MagicEye3.ClienteMVC.Web.Service
                 HttpRequestMessage message = new();
                 message.Headers.Add("Accept", "application/json");
                 //token
+                //if (withBearer)
+                //{
+                //    var token = _tokenProvider.GetTokenAsync();
+                //    message.Headers.Add("Authorization", $"Bearer {token}");
+                //}
                 if (withBearer)
                 {
-                    var token = _tokenProvider.GetTokenAsync();
-                    message.Headers.Add("Authorization", $"Bearer {token}");
+                    var token = _httpContextAccessor.HttpContext?.Request.Cookies["JWTToken"];
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        message.Headers.Authorization =
+                            new AuthenticationHeaderValue("Bearer", token);
+                    }
                 }
 
                 message.RequestUri = new Uri(requestDto.Url);

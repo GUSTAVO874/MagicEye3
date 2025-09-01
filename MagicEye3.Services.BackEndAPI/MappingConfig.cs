@@ -10,8 +10,11 @@ namespace MagicEye2.Services.BackEndAPI
         public MappingConfig()
         {
             CreateMap<Carrera, CarreraDto>().ReverseMap();
+            CreateMap<Periodo, PeriodoDto>().ReverseMap();
+            CreateMap<Ciclo, CicloDto>().ReverseMap();
+            CreateMap<Parcial, ParcialDto>().ReverseMap();
             //CreateMap<Cliente, ClienteDto>().ReverseMap();
-            
+
             //// //Mapeo de la tabla intermedia
             //CreateMap<ExpedienteCliente, ExpedienteClienteDto>().ReverseMap();
 
