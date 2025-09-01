@@ -10,7 +10,7 @@ namespace MagicEye3.Services.BackEndAPI.Utilities
     {
         ACD, // Aprendizaje con el Docente
         APE, // Aprendizaje Practico Experimental
-        AA   // Aprendizaje Autonomo
+        AA   // el Aprendizaje Autonomo
     }
 
     // ------------------------------------------------------------
